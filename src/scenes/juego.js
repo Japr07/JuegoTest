@@ -14,12 +14,12 @@ class Juego extends Phaser.Scene {
         this.gokuss3 = new Npcs(this, 350, 100, 'Goku SS3', 1, 8);
         this.gokuss4 = new Npcs(this, 450, 100, 'Goku SS4', 1, 16);
         this.gokuss5 = new Npcs(this, 550, 100, 'Goku SS5', 1, 32);
-        this.GoldenDestroyer = new Npcs(this, 700, 100, 'Golden Destroyer', 1, 64);
+        this.GoldenDestroyer = new Npcs(this, 700, 100, 'Golden Destroyer', 0, 64);
         this.enemigo = false;
         this.enemigos = this.add.group([this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
         this.player = new Player(this, 100, 200, 'Goku', 1);
         //buscar correccion de bug que sigue en target cuando no lo esta... 
-        this.physics.add.collider(this.enemigos, this.player, null, this.SeleccionarEnemigo, this);
+        this.physics.add.collider(this.enemigos, this.player, this.SeleccionarEnemigo, null, this);
         this.teclas = this.input.keyboard.addKeys('up,down,left,right,a,d');
         this.dir = 'Abajo';
         this.make.text({
@@ -68,7 +68,7 @@ class Juego extends Phaser.Scene {
             this.gokuss3 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS3', 1, 8);
             this.gokuss4 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS4', 1, 16);
             this.gokuss5 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS5', 1, 32);
-            this.GoldenDestroyer = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Golden Destroyer', 1, 64);
+            this.GoldenDestroyer = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Golden Destroyer', 0, 64);
             this.enemigos = this.add.group([this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
             this.physics.add.collider(this.enemigos, this.player, null, this.SeleccionarEnemigo, this);
 
@@ -128,6 +128,7 @@ class Juego extends Phaser.Scene {
         };
     };
     SeleccionarEnemigo(enemigo) {
+        console.log(enemigo)
         this.enemigo = enemigo;
     };
 };

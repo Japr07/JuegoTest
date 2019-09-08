@@ -8,8 +8,12 @@ const config = {
     parent: "juego",
     url: "http://dbzhu.com",
     backgroundColor: "#392542",
+    pixelArt: true,
     physics: {
-        default: "arcade"
+        default: "arcade",
+        arcade: {
+            debug: true
+        }
     },
     type: Phaser.AUTO,
     scene: [
