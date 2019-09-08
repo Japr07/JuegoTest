@@ -20,7 +20,7 @@ class Juego extends Phaser.Scene {
         this.physics.add.collider(this.enemigos, this.player, null, this.SeleccionarEnemigo, this);
         this.teclas = this.input.keyboard.addKeys('up,down,left,right,a,d');
         this.dir = 'Abajo';
-        this.statsNivel = this.add.text(this.game.config.width - 110, 40, `
+        this.add.text(this.game.config.width - 110, 40, `
         Instrucciones:
         Moverse: Flechas
         Golpear: A
