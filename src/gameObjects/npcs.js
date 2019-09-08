@@ -14,25 +14,25 @@ class Npcs extends Sprite {
         this.zenie = (this.nivel * 5) + Phaser.Math.Between(1, 10);
         this.exp = Math.round((this.nivel * 50) + Phaser.Math.Between(1, 10));
         this.escena = scene;
-        this.setScale(2);
     };
     takeDamage(Damage, Player) {
         this.vida -= Damage;
         if (this.vida <= Damage) {
             let exp = this.exp * Player.expboost;
-            let showExp = this.scene.add.text(Player.body.x + 25, Player.body.y - 10, `exp: ${exp}`, {
-                fontFamily: 'Verdana',
-                fontSize: '12px',
-                color: 'red'
-            }).setOrigin(0.5, 0.5);
-            let showZenie = this.scene.add.text(Player.body.x + 25, Player.body.y, `Zenie: ${this.zenie}`, {
-                fontFamily: 'Verdana',
-                fontSize: '12px',
-                color: 'red'
+            let showExpZenie = this.escena.make.text({
+                x: Player.body.x + 25,
+                y: Player.body.y,
+                text: `
+    exp: ${exp}
+    Zenie: ${this.zenie}
+                `,
+                style: {
+                    font: '13px monospace',
+                    fill: '#ffffff'
+                }
             }).setOrigin(0.5, 0.5);
             setTimeout(() => {
-                showZenie.destroy();
-                showExp.destroy();
+                showExpZenie.destroy();
             }, 2000);
             Player.DarExp(exp);
             Player.DarZenie(this.zenie);

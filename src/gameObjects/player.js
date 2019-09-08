@@ -78,27 +78,31 @@ class Player extends Sprite {
                 nextExp += 1000 * multiplicador;
                 this.exp = Math.abs(this.exp - nextExp);
             }
-            let showLvlUp = this.escena.add.text(this.body.x + 25, this.body.y + 30, `Level UP`, {
-                fontFamily: 'Verdana',
-                fontSize: '12px',
-                color: 'red'
+            let showLvlUp = this.escena.make.text({
+                x: this.body.x + 25,
+                y: this.body.y + 30,
+                text: 'Level UP',
+                style: {
+                    font: '13px monospace',
+                    fill: '#ffffff'
+                }
             }).setOrigin(0.5, 0.5);
             setTimeout(() => {
                 showLvlUp.destroy();
-            }, 1000);
+            }, 1200);
             this.LvlUp(multiplicador + this.bonusNivel);
         };
         //debug
         this.escena.statsNivel.text = `
-                Nivel: ${this.nivel}.
-                exp: ${this.exp}/${this.nexp}.
-                vida: ${this.vida}/${this.maxVida}.
-                ki: ${this.ki}/${this.maxKi}.
-                fuerza: ${this.fuerza}.
-                defensa: ${this.defensa}.
-                ki Defensa: ${this.kiDefensa}.
-                statsPoint: ${this.statsPoints}.
-                zenie: ${this.zenie}.
+        Nivel: ${this.nivel}
+        exp: ${this.exp}/${this.nexp}
+        vida: ${this.vida}/${this.maxVida}
+        ki: ${this.ki}/${this.maxKi}
+        fuerza: ${this.fuerza}
+        defensa: ${this.defensa}
+        ki Defensa: ${this.kiDefensa}
+        statsPoint: ${this.statsPoints}
+        zenie: ${this.zenie}
             `;
     };
 };
