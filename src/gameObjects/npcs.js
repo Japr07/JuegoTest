@@ -13,13 +13,17 @@ class Npcs extends Sprite {
         this.kiDefensa = (25 * this.nivel) + 75;
         this.zenie = (this.nivel * 5) + Phaser.Math.Between(1, 10);
         this.exp = Math.round((this.nivel * 50) + Phaser.Math.Between(1, 10));
-        this.escena = scene;
     };
+
+    Ataque(Player) {
+
+    }
+
     takeDamage(Damage, Player) {
         this.vida -= Damage;
         if (this.vida <= Damage) {
             let exp = this.exp * Player.expboost;
-            let showExpZenie = this.escena.make.text({
+            let showExpZenie = this.scene.make.text({
                 x: Player.body.x + 25,
                 y: Player.body.y,
                 text: `

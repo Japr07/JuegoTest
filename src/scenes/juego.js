@@ -128,7 +128,6 @@ class Juego extends Phaser.Scene {
         };
     };
     SeleccionarEnemigo(enemigo) {
-        console.log(enemigo)
         this.enemigo = enemigo;
     };
 };
