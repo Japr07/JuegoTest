@@ -1,5 +1,6 @@
 import Player from '../gameObjects/player.js';
 import Npcs from '../gameObjects/npcs.js';
+import Utilidades from '../gameObjects/utilidades.js';
 
 class Juego extends Phaser.Scene {
     constructor() {
@@ -22,20 +23,12 @@ class Juego extends Phaser.Scene {
         this.physics.add.collider(this.enemigos, this.player, this.SeleccionarEnemigo, null, this);
         this.teclas = this.input.keyboard.addKeys('up,down,left,right,a,d');
         this.dir = 'Abajo';
-        this.make.text({
-            x: this.game.config.width - 150,
-            y: 50,
-            text: `
+        Utilidades.ColocarTexto(this, this.game.config.width - 150, 50, `
         Instrucciones:
         Moverse: Flechas
         Golpear: A
         Generar mas npcs: D
-        `,
-            style: {
-                font: '18px monospace',
-                fill: '#ffffff'
-            }
-        }).setOrigin(0.5, 0.5);
+        `, 18);
         //stats
         let text = `
         Nivel: ${this.player.nivel}
@@ -48,16 +41,7 @@ class Juego extends Phaser.Scene {
         statsPoint ${this.player.statsPoints}
         zenie: ${this.player.zenie}
         `;
-        this.statsNivel = this.make.text({
-            x: this.game.config.width / 2,
-            y: this.game.config.width / 4,
-            text: text,
-            style: {
-                font: '18px monospace',
-                fill: '#ffffff'
-            }
-        }).setOrigin(0.5, 0.5);
-
+        this.statsNivel = Utilidades.ColocarTexto(this, this.game.config.width / 2 - 34, this.game.config.height / 2, text, 18);
     }
     update(time, delta) {
 
@@ -82,20 +66,11 @@ class Juego extends Phaser.Scene {
             }, 350);
             let damage = this.player.Golpe(this.enemigo, this.dir);
             if (!this.enemigo.active) return;
-            let showDamage = this.make.text({
-                x: this.enemigo.body.x + 25,
-                y: this.enemigo.body.y,
-                text: `Daño: ${damage}`,
-                style: {
-                    font: '13px monospace',
-                    fill: '#ffffff'
-                }
-            }).setOrigin(0.5, 0.5);
-
+            let showDamage = Utilidades.ColocarTexto(this, this.enemigo.body.x + this.enemigo.width / 2, this.enemigo.body.y, `Daño: ${damage}`, 13);
             setTimeout(() => {
                 showDamage.destroy();
             }, 300);
-            this.enemigo.takeDamage(damage, this.player);
+            this.enemigo.takeDamage(damage, "fisico", this.player);
             this.enemigo = false;
         };
         if (this.teclas.down.isDown && !this.player.body.wasTouching.down) {

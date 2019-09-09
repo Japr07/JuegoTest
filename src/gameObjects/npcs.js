@@ -1,4 +1,5 @@
 import Sprite from './sprite.js';
+import Utilidades from './utilidades.js';
 
 class Npcs extends Sprite {
     constructor(scene, x, y, SpriteName, Frame, Nivel = 1) {
@@ -19,28 +20,29 @@ class Npcs extends Sprite {
 
     }
 
-    takeDamage(Damage, Player) {
+    takeDamage(Damage, Tipo, Player) {
         this.vida -= Damage;
         if (this.vida <= Damage) {
-            let exp = this.exp * Player.expboost;
-            let showExpZenie = this.scene.make.text({
-                x: Player.body.x + 25,
-                y: Player.body.y,
-                text: `
-    exp: ${exp}
-    Zenie: ${this.zenie}
-                `,
-                style: {
-                    font: '13px monospace',
-                    fill: '#ffffff'
-                }
-            }).setOrigin(0.5, 0.5);
-            setTimeout(() => {
-                showExpZenie.destroy();
-            }, 2000);
-            Player.DarExp(exp);
-            Player.DarZenie(this.zenie);
-            this.destroy();
+            switch (Tipo) {
+                case "fisico":
+                    let exp = this.exp * Player.expboost;
+                    let showExpZenie = Utilidades.ColocarTexto(this.scene, Player.body.x - 34, Player.body.y, `
+                    exp: ${exp}
+                    Zenie: ${this.zenie}
+                    `, 13);
+                    setTimeout(() => {
+                        showExpZenie.destroy();
+                    }, 2000);
+                    Player.DarExp(exp);
+                    Player.DarZenie(this.zenie);
+                    this.destroy();
+
+                    break;
+                case "ki":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 };

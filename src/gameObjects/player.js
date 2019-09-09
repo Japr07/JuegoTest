@@ -1,4 +1,5 @@
 import Sprite from "./sprite.js";
+import Utilidades from "./utilidades.js";
 
 class Player extends Sprite {
     constructor(scene, x, y, SpriteName, Frame) {
@@ -22,7 +23,6 @@ class Player extends Sprite {
         this.velPuno = 2000;
         this.maxCombo = 3;
         this.canGolpe = true;
-        this.escena = scene;
     };
     LvlUp(Niveles = 1) {
         this.nivel += 1 * Niveles;
@@ -78,22 +78,14 @@ class Player extends Sprite {
                 nextExp += 1000 * multiplicador;
                 this.exp = Math.abs(this.exp - nextExp);
             }
-            let showLvlUp = this.escena.make.text({
-                x: this.body.x + 25,
-                y: this.body.y + 30,
-                text: 'Level UP',
-                style: {
-                    font: '13px monospace',
-                    fill: '#ffffff'
-                }
-            }).setOrigin(0.5, 0.5);
+            let showLvlUp = Utilidades.ColocarTexto(this.scene, this.body.x + 34, this.body.y + 30, 'Level UP', 13);
             setTimeout(() => {
                 showLvlUp.destroy();
             }, 1200);
             this.LvlUp(multiplicador + this.bonusNivel);
         };
         //debug
-        this.escena.statsNivel.text = `
+        this.scene.statsNivel.text = `
         Nivel: ${this.nivel}
         exp: ${this.exp}/${this.nexp}
         vida: ${this.vida}/${this.maxVida}

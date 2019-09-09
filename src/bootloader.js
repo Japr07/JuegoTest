@@ -1,3 +1,5 @@
+import Utilidades from "./gameObjects/utilidades.js";
+
 class Bootloader extends Phaser.Scene {
     constructor() {
         super({
@@ -9,43 +11,11 @@ class Bootloader extends Phaser.Scene {
         let progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
         progressBox.fillRect(240, 270, 320, 50);
-
         let width = this.cameras.main.width;
         let height = this.cameras.main.height;
-        let loadingText = this.make.text({
-            x: width / 2,
-            y: height / 2 - 50,
-            text: 'Cargando...',
-            style: {
-                font: '20px monospace',
-                fill: '#ffffff'
-            }
-        });
-        loadingText.setOrigin(0.5, 0.5);
-
-        let percentText = this.make.text({
-            x: width / 2,
-            y: height / 2 - 5,
-            text: '0%',
-            style: {
-                font: '18px monospace',
-                fill: '#ffffff'
-            }
-        });
-        percentText.setOrigin(0.5, 0.5);
-
-        let assetText = this.make.text({
-            x: width / 2,
-            y: height / 2 + 50,
-            text: '',
-            style: {
-                font: '18px monospace',
-                fill: '#ffffff'
-            }
-        });
-
-        assetText.setOrigin(0.5, 0.5);
-
+        let loadingText = Utilidades.ColocarTexto(this, width / 2, height / 2 - 50, 'Cargando...', 20);
+        let percentText = Utilidades.ColocarTexto(this, width / 2, height / 2 - 5, '0%', 18);
+        let assetText = Utilidades.ColocarTexto(this, width / 2, height / 2 + 50, '', 18);
         this.load.on('progress', value => {
             percentText.setText(parseInt(value * 100) + '%');
             progressBar.clear();
@@ -99,9 +69,6 @@ class Bootloader extends Phaser.Scene {
             frameWidth: 136
         });
     };
-    create() {
-        console.log("deed")
-    }
 };
 
 
