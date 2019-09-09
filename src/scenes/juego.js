@@ -66,10 +66,7 @@ class Juego extends Phaser.Scene {
             }, 350);
             let damage = this.player.Golpe(this.enemigo, this.dir);
             if (!this.enemigo.active) return;
-            let showDamage = Utilidades.ColocarTexto(this, this.enemigo.body.x + this.enemigo.width / 2, this.enemigo.body.y, `Daño: ${damage}`, 13);
-            setTimeout(() => {
-                showDamage.destroy();
-            }, 300);
+            Utilidades.ColocarTexto(this, this.enemigo.body.x + this.enemigo.width / 2, this.enemigo.body.y, `Daño: ${damage}`, 13, 300);
             this.enemigo.takeDamage(damage, "fisico", this.player);
             this.enemigo = false;
         };

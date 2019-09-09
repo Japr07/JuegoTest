@@ -78,14 +78,12 @@ class Player extends Sprite {
                 nextExp += 1000 * multiplicador;
                 this.exp = Math.abs(this.exp - nextExp);
             }
-            let showLvlUp = Utilidades.ColocarTexto(this.scene, this.body.x + 34, this.body.y + 30, 'Level UP', 13);
-            setTimeout(() => {
-                showLvlUp.destroy();
-            }, 1200);
+            Utilidades.ColocarTexto(this.scene, this.body.x + 34, this.body.y + 30, 'Level UP', 13, 1200);
             this.LvlUp(multiplicador + this.bonusNivel);
         };
-        //debug
-        this.scene.statsNivel.text = `
+    };
+    ActualizarStats(Scene) {
+        Scene.statsNivel.text = `
         Nivel: ${this.nivel}
         exp: ${this.exp}/${this.nexp}
         vida: ${this.vida}/${this.maxVida}
@@ -95,7 +93,7 @@ class Player extends Sprite {
         ki Defensa: ${this.kiDefensa}
         statsPoint: ${this.statsPoints}
         zenie: ${this.zenie}
-            `;
-    };
+        `;
+    }
 };
 export default Player;

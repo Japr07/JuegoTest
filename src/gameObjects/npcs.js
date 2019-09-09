@@ -26,17 +26,14 @@ class Npcs extends Sprite {
             switch (Tipo) {
                 case "fisico":
                     let exp = this.exp * Player.expboost;
-                    let showExpZenie = Utilidades.ColocarTexto(this.scene, Player.body.x - 34, Player.body.y, `
+                    Utilidades.ColocarTexto(this.scene, Player.body.x - 34, Player.body.y, `
                     exp: ${exp}
                     Zenie: ${this.zenie}
-                    `, 13);
-                    setTimeout(() => {
-                        showExpZenie.destroy();
-                    }, 2000);
-                    Player.DarExp(exp);
+                    `, 13, 2000);
                     Player.DarZenie(this.zenie);
+                    Player.DarExp(exp);
+                    Player.ActualizarStats(this.scene);
                     this.destroy();
-
                     break;
                 case "ki":
                     break;
