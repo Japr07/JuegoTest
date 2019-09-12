@@ -1,4 +1,4 @@
-import Utilidades from "./gameObjects/utilidades.js";
+import Utilidades from "./utils/utilidades.js";
 
 class Bootloader extends Phaser.Scene {
     constructor() {

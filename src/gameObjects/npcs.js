@@ -1,5 +1,5 @@
 import Sprite from './sprite.js';
-import Utilidades from './utilidades.js';
+import Utilidades from '../utils/utilidades.js';
 
 class Npcs extends Sprite {
     constructor(scene, x, y, SpriteName, Frame, Nivel = 1) {

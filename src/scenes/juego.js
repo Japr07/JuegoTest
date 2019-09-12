@@ -1,6 +1,6 @@
 import Player from '../gameObjects/player.js';
 import Npcs from '../gameObjects/npcs.js';
-import Utilidades from '../gameObjects/utilidades.js';
+import Utilidades from '../utils/utilidades.js';
 
 class Juego extends Phaser.Scene {
     constructor() {
@@ -20,14 +20,15 @@ class Juego extends Phaser.Scene {
         this.enemigos = this.add.group([this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
         this.player = new Player(this, 100, 200, 'Goku', 1);
         //buscar correccion de bug que sigue en target cuando no lo esta... 
-        this.physics.add.collider(this.enemigos, this.player, this.SeleccionarEnemigo, null, this);
-        this.teclas = this.input.keyboard.addKeys('up,down,left,right,a,d');
+        this.physics.add.collider(this.enemigos, this.player, this.SeleccionarEnemigo, false, this);
+        this.teclas = this.input.keyboard.addKeys('up,down,left,right,a,d,s');
         this.dir = 'Abajo';
         Utilidades.ColocarTexto(this, this.game.config.width - 150, 50, `
         Instrucciones:
         Moverse: Flechas
         Golpear: A
         Generar mas npcs: D
+        Usar StatsPoints: S
         `, 18);
         //stats
         let text = `
@@ -38,7 +39,7 @@ class Juego extends Phaser.Scene {
         fuerza: ${this.player.fuerza}
         defensa: ${this.player.defensa}
         ki Defensa: ${this.player.kiDefensa}
-        statsPoint ${this.player.statsPoints}
+        statsPoint: ${this.player.statsPoints}
         zenie: ${this.player.zenie}
         `;
         this.statsNivel = Utilidades.ColocarTexto(this, this.game.config.width / 2 - 34, this.game.config.height / 2, text, 18);
@@ -54,8 +55,10 @@ class Juego extends Phaser.Scene {
             this.gokuss5 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS5', 1, 32);
             this.GoldenDestroyer = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Golden Destroyer', 0, 64);
             this.enemigos = this.add.group([this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
-            this.physics.add.collider(this.enemigos, this.player, null, this.SeleccionarEnemigo, this);
-
+            this.physics.add.collider(this.enemigos, this.player, this.SeleccionarEnemigo, false, this);
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.teclas.s)) {
+            this.player.StatsPoints()
         }
 
         if (this.teclas.a.isDown && this.player.canGolpe) {
