@@ -100,6 +100,9 @@ class Player extends Sprite {
         NuevaVentana.addEventListener("click", () => {
             console.log("casoas")
         })
+        NuevaVentana.addEventListener("blur", () => {
+            NuevaVentana.close();
+        })
         NuevaVentana.addEventListener("load", () => {
             NuevaVentana.document.getElementById("cantidad").value = this.statsPoints;
         })
