@@ -75,7 +75,6 @@ class Juego extends Phaser.Scene {
         };
         if (this.teclas.down.isDown && !this.player.body.wasTouching.down) {
             this.player.Mover('Abajo');
-
             this.dir = 'Abajo';
         } else if (Phaser.Input.Keyboard.JustUp(this.teclas.down)) {
             this.player.Mover('Quieto');

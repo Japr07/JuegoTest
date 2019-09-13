@@ -96,7 +96,10 @@ class Player extends Sprite {
         `;
     }
     StatsPoints() {
-        let NuevaVentana = window.open("/src/utils/StatsPoints.html", "Test", "width=300,height=300,scrollbars=yes,resizable=yes");
+        let NuevaVentana = window.open("./src/utils/StatsPoints.html", "Test", "width=250,height=200,scrollbars=yes,resizable=yes");
+        NuevaVentana.addEventListener("click", () => {
+            console.log("casoas")
+        })
         NuevaVentana.addEventListener("load", () => {
             NuevaVentana.document.getElementById("cantidad").value = this.statsPoints;
         })
@@ -104,7 +107,7 @@ class Player extends Sprite {
             e.preventDefault();
             let error = NuevaVentana.document.getElementById("error");
             let stats = NuevaVentana.document.getElementById("Stats").value;
-            let cantidad = parseInt(NuevaVentana.document.getElementById("cantidad").value);            
+            let cantidad = parseInt(NuevaVentana.document.getElementById("cantidad").value);
             if (cantidad > this.statsPoints) {
                 cantidad = this.statsPoints;
             };
@@ -113,8 +116,6 @@ class Player extends Sprite {
                     if (this.statsPoints >= 5 * cantidad) {
                         this.maxCombo += (1 * cantidad);
                         this.statsPoints -= (5 * cantidad);
-                    } else {
-
                     }
                     break;
                 case "Vida":
@@ -122,8 +123,6 @@ class Player extends Sprite {
                         this.vida += (100 * cantidad);
                         this.maxVida += (100 * cantidad);
                         this.statsPoints -= (1 * cantidad);
-                    } else {
-
                     }
                     break;
                 case "Ki":
@@ -131,33 +130,24 @@ class Player extends Sprite {
                         this.ki += (50 * cantidad);
                         this.maxKi += (50 * cantidad);
                         this.statsPoints -= (1 * cantidad);
-                    } else {
-
                     }
                     break;
                 case "KiDefensa":
                     if (this.statsPoints >= cantidad) {
                         this.kiDefensa += (50 * cantidad);
                         this.statsPoints -= (1 * cantidad);
-                    } else {
-
                     }
                     break;
                 case "Fuerza":
-                    console
                     if (this.statsPoints >= cantidad) {
                         this.fuerza += (10 * cantidad);
                         this.statsPoints -= (1 * cantidad);
-                    } else {
-
                     }
                     break;
                 case "Defensa":
                     if (this.statsPoints >= cantidad) {
                         this.defensa += (10 * cantidad);
                         this.statsPoints -= (1 * cantidad);
-                    } else {
-
                     }
                     break;
             }
