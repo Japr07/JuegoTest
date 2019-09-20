@@ -1,4 +1,4 @@
-class Sprite extends Phaser.GameObjects.Sprite {
+export default class Sprite extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, SpriteName, Frame) {
         super(scene, x, y, SpriteName, Frame);
         // this.setScale(1.5)
@@ -150,4 +150,3 @@ class Sprite extends Phaser.GameObjects.Sprite {
 
     };
 };
-export default Sprite;

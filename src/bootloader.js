@@ -7,6 +7,11 @@ class Bootloader extends Phaser.Scene {
         });
     };
     preload() {
+
+        const rutaAudio = './src/assets/audio/';
+        const rutaSprite = './src/assets/sprites/';
+
+
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
@@ -22,7 +27,6 @@ class Bootloader extends Phaser.Scene {
             progressBar.fillStyle(0xffffff, 1);
             progressBar.fillRect(250, 280, 300 * value, 30);
         });
-
         this.load.on('fileprogress', file => {
             assetText.setText('Cargando Archivo: ' + file.key);
         });
@@ -36,35 +40,48 @@ class Bootloader extends Phaser.Scene {
             this.scene.start("Juego");
         });
 
-        this.load.spritesheet('GokuAdultoGT', './src/assets/AdultGTGoku.png', {
-            frameHeight: 68,
-            frameWidth: 68,
-        });
-        this.load.spritesheet('Goku', './src/assets/goku.png', {
-            frameHeight: 68,
-            frameWidth: 68
-        });
-        this.load.spritesheet('Goku SS', './src/assets/Gokuss.png', {
-            frameHeight: 68,
-            frameWidth: 68
-        });
-        this.load.spritesheet('Goku SS2', './src/assets/Gokuss2.png', {
+        this.load.audio('Golpe', `${rutaAudio}hit1.wav`);
+        this.load.audio('Damage', `${rutaAudio}hit2.wav`);
+        this.load.audio('LvlUp', `${rutaAudio}newskill.wav`);
+
+        this.load.image('Cerrar', `${rutaSprite}Cerrar.png`);
+        this.load.image('Boton Mas', `${rutaSprite}Mas.png`);
+        this.load.image('Boton Menos', `${rutaSprite}Menos.png`);
+        this.load.image('Boton Fondo', `${rutaSprite}botonFondo.png`);
+
+        this.load.spritesheet('GokuAdultoGT', `${rutaSprite}AdultGTGoku.png`, {
             frameHeight: 68,
             frameWidth: 68
         });
-        this.load.spritesheet('Goku SS3', './src/assets/Gokuss3.png', {
+        this.load.spritesheet('GokuAdultoGT', `${rutaSprite}AdultGTGoku.png`, {
             frameHeight: 68,
             frameWidth: 68
         });
-        this.load.spritesheet('Goku SS4', './src/assets/Gokuss4.png', {
+        this.load.spritesheet('Goku', `${rutaSprite}goku.png`, {
             frameHeight: 68,
             frameWidth: 68
         });
-        this.load.spritesheet('Goku SS5', './src/assets/GokuSS5.png', {
+        this.load.spritesheet('Goku SS', `${rutaSprite}Gokuss.png`, {
             frameHeight: 68,
             frameWidth: 68
         });
-        this.load.spritesheet('Golden Destroyer', './src/assets/golden destroyer64.png', {
+        this.load.spritesheet('Goku SS2', `${rutaSprite}Gokuss2.png`, {
+            frameHeight: 68,
+            frameWidth: 68
+        });
+        this.load.spritesheet('Goku SS3', `${rutaSprite}Gokuss3.png`, {
+            frameHeight: 68,
+            frameWidth: 68
+        });
+        this.load.spritesheet('Goku SS4', `${rutaSprite}Gokuss4.png`, {
+            frameHeight: 68,
+            frameWidth: 68
+        });
+        this.load.spritesheet('Goku SS5', `${rutaSprite}GokuSS5.png`, {
+            frameHeight: 68,
+            frameWidth: 68
+        });
+        this.load.spritesheet('Golden Destroyer', `${rutaSprite}golden destroyer64.png`, {
             frameHeight: 136,
             frameWidth: 136
         });

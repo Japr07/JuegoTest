@@ -8,7 +8,7 @@ let Utilidades = {
                 font: `${TamañoFuente}px monospace`,
                 fill: '#ffffff'
             }
-        }).setOrigin(0.5, 0.5);
+        }).setOrigin(0.5);
         if (Tiempo != null) {
             setTimeout(() => {
                 text.destroy();
@@ -16,6 +16,17 @@ let Utilidades = {
         } else {
             return text;
         }
-    }
+    },
+    // ExisteObjeto: (Objeto, Player) => {
+    //     let existe = false;
+    //     for (const i in Player.inventario) {
+    //         console.log(i)
+    //         console.log(Player.inventario.hasOwnProperty(i))
+    //         if (Player.inventario.hasOwnProperty("Pesas")) {
+    //             existe = true;
+    //         }
+    //     }
+    //     return existe;
+    // }
 }
 export default Utilidades;
