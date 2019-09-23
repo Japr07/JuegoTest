@@ -2,9 +2,9 @@ import Juego from './scenes/juego.js';
 import Bootloader from './bootloader.js';
 const config = {
     width: 1350,
-    height: 650,
+    height: 645,
     title: "DBZHU",
-    version: "0.0.1",
+    version: "0.1.0",
     parent: "juego",
     url: "http://dbzhu.com",
     backgroundColor: "#392542",

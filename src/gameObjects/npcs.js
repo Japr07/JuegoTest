@@ -19,31 +19,89 @@ export default class Npcs extends Sprite {
             loop: false,
             delay: 500
         });
+
     };
 
     ShowStats() {
-        let contenedor = this.scene.add.container(this.scene.game.config.width / 2 - 200, this.scene.game.config.height / 2 - 100);
-        let area = new Phaser.GameObjects.Rectangle(this.scene, 0, 0, 200, 200)
-        let graphics = this.scene.add.graphics({
-            fillStyle: {
-                color: 0x0000aa
+        let stats = Utilidades.ColocarTexto(this.scene, 0, 0, `Nombre: ${this.texture.key}
+Nivel: ${this.nivel}
+vida: ${this.vida}/${this.maxVida}
+ki: ${this.ki}/${this.maxKi}
+fuerza: ${this.fuerza}
+defensa: ${this.defensa}
+ki Defensa: ${this.kiDefensa}`, 13)
+        Utilidades.NuevaVentana(this.scene, stats)
+    };
+
+    Moverse() {
+        // let isMoving = false
+        this.intervaloMoverse = setInterval(() => {
+            let dirRandom = Phaser.Math.Between(1, 5);
+            this.AnimMover("Quieto");
+            switch (dirRandom) {
+                case 1:
+                    if (this.body.y != 0) {
+                        this.AnimMover("Arriba");
+                        this.body.setVelocityY(-150);
+                    } else {
+                        this.AnimMover("Abajo");
+                        this.body.setVelocityY(150);
+                    }
+                    break;
+                case 2:
+                    if (this.body.y + this.body.height >= 650) {
+                        this.AnimMover("Arriba");
+                        this.body.setVelocityY(-150);
+                    } else {
+                        this.AnimMover("Abajo");
+                        this.body.setVelocityY(150);
+                    }
+                    break;
+                case 3:
+                    if (this.body.x != 0) {
+                        this.AnimMover("Izquierda");
+                        this.body.setVelocityX(-150);
+                    } else {
+                        this.AnimMover("Derecha");
+                        this.body.setVelocityX(150);
+                    }
+                    break;
+                case 4:
+                    if (this.body.x + this.body.width >= 1350) {
+                        this.AnimMover("Izquierda");
+                        this.body.setVelocityX(-150);
+                    } else {
+                        this.AnimMover("Derecha");
+                        this.body.setVelocityX(150);
+                    }
+                    break;
+                case 5:
+                    this.AnimMover("Quieto");
+                    this.body.setVelocity(0);
+                    break;
             }
-        });
-        graphics.fillRectShape(area)
-        let stats = Utilidades.ColocarTexto(this.scene, area.x + 80, area.y + 100, `
-        Nombre: ${this.texture.key}
-        Nivel: ${this.nivel}
-        vida: ${this.vida}/${this.maxVida}
-        ki: ${this.ki}/${this.maxKi}
-        fuerza: ${this.fuerza}
-        defensa: ${this.defensa}
-        ki Defensa: ${this.kiDefensa}
-        `, 13)
-        let cerrar = this.scene.add.image(area.x + 200, area.y, 'Cerrar').setAngle(45).setScale(0.6).setInteractive();
-        contenedor.add([graphics, stats, cerrar]);
-        cerrar.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            contenedor.destroy();
-        });
+        }, 1000);
+    };
+
+    DropItem(Player) {
+        let droprate = Phaser.Math.Between(0, 2);
+        if (droprate == 1) {
+            let nombre = Phaser.Math.Between(0, 2);
+            let cantidad = Phaser.Math.Between(1, 3);
+            switch (nombre) {
+                case 0:
+                    nombre = 'Pesas';
+                    break;
+                case 1:
+                    nombre = 'Semillas';
+                    break;
+                case 2:
+                    nombre = 'SkillPoints';
+                    break;
+            }
+            Player.NuevoItem(nombre, cantidad);
+            Utilidades.ColocarTexto(this.scene, Player.body.x + 40, Player.body.y, `${this.texture.key} Dejo Caer ${cantidad} ${nombre}`, 13, 3000)
+        }
     }
 
     takeDamage(Damage, Tipo, Player) {
@@ -53,14 +111,17 @@ export default class Npcs extends Sprite {
         if (this.vida <= Damage) {
             switch (Tipo) {
                 case "fisico":
-                    let exp = this.exp * Player.expboost;
+                    let exp = Math.round(this.exp * (Player.expboost * 5 / 100 + 1));
                     Utilidades.ColocarTexto(this.scene, Player.body.x - 34, Player.body.y, `
                     exp: ${exp}
                     Zenie: ${this.zenie}
                     `, 13, 2000);
                     Player.DarZenie(this.zenie);
                     Player.DarExp(exp);
+                    this.DropItem(Player);
+                    clearInterval(this.intervaloMoverse);
                     this.destroy();
+                    Utilidades.PlayerExpBoost(Player);
                     break;
                 case "ki":
                     break;

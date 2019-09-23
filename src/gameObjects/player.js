@@ -19,10 +19,7 @@ export default class Player extends Sprite {
         this.nexp = 1000;
         this.bonusNivel = 0;
         this.expboost = 1;
-        this.inventario = [{
-            nombre: "Pesas",
-            cantidad: 1
-        }];
+        this.inventario = [];
         this.velPuno = 2000;
         this.maxCombo = 3;
         this.canGolpe = true;
@@ -35,6 +32,34 @@ export default class Player extends Sprite {
             loop: false
         });
     };
+
+    Inventario() {
+        let inventario = '';
+        if (this.inventario.length > 0) {
+            this.inventario.forEach(data => {
+                inventario += `
+${data.nombre} - ${data.cantidad}
+`;
+            });
+        } else {
+            inventario = 'No tienes ningun Item'
+        }
+        let data = Utilidades.ColocarTexto(this.scene, 0, 0, inventario, 13);
+        Utilidades.NuevaVentana(this.scene, data);
+    };
+
+    NuevoItem(nombre, cantidad) {
+        let inv = Utilidades.ExisteObjeto(nombre, this);
+        if (inv.existe) {
+            this.inventario[inv.posicion].cantidad += cantidad;
+        } else {
+            this.inventario.push({
+                nombre,
+                cantidad
+            });
+        }
+    }
+
     LvlUp(Niveles = 1) {
         this.lvlUpAudio.play();
         this.nivel += 1 * Niveles;
@@ -70,31 +95,18 @@ export default class Player extends Sprite {
         };
     };
     ShowStats() {
-        let contenedor = this.scene.add.container(this.scene.game.config.width / 2 - 200, this.scene.game.config.height / 2 - 100);
-        let area = new Phaser.GameObjects.Rectangle(this.scene, 0, 0, 200, 200);
-        let graphics = this.scene.add.graphics({
-            fillStyle: {
-                color: 0x0000aa
-            }
-        });
-        graphics.fillRectShape(area);
-        let stats = Utilidades.ColocarTexto(this.scene, area.x + 80, area.y + 100, `
-        Nombre: Player
-        Nivel: ${this.nivel}
-        exp: ${this.exp}/${this.nexp}
-        vida: ${this.vida}/${this.maxVida}
-        ki: ${this.ki}/${this.maxKi}
-        fuerza: ${this.fuerza}
-        defensa: ${this.defensa}
-        ki Defensa: ${this.kiDefensa}
-        statsPoint: ${this.statsPoints}
-        zenie: ${this.zenie}
-        `, 13);
-        let cerrar = this.scene.add.image(area.x + 200, area.y, 'Cerrar').setAngle(45).setScale(0.6).setInteractive();
-        contenedor.add([graphics, stats, cerrar]);
-        cerrar.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            contenedor.destroy();
-        });
+        let stats = Utilidades.ColocarTexto(this.scene, 0, 0, `Nombre: Player
+Nivel: ${this.nivel}
+exp: ${this.exp}/${this.nexp}
+vida: ${this.vida}/${this.maxVida}
+ki: ${this.ki}/${this.maxKi}
+fuerza: ${this.fuerza}
+defensa: ${this.defensa}
+ki Defensa: ${this.kiDefensa}
+statsPoint: ${this.statsPoints}
+zenie: ${this.zenie}
+Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
+        Utilidades.NuevaVentana(this.scene, stats);
     }
 
     Golpe(Enemigo, Direccion) {
@@ -308,7 +320,7 @@ export default class Player extends Sprite {
             }
             contenedor.destroy();
         });
-        let cerrar = this.scene.add.image(area.x + area.width, area.y, 'Cerrar').setAngle(45).setScale(0.6).setInteractive();
+        let cerrar = this.scene.add.image(area.width, area.y, 'Cerrar').setAngle(45).setScale(0.6).setInteractive();
         contenedor.add([graphics, anunciado, aceptarFondo, aceptarText, cerrar, textVida, textKi, textKiDefensa, textFuerza, textDefensa, masVida, masKi, masKiDefensa, masFuerza, masDefensa, stats, menosVida, menosKi, menosKiDefensa, menosFuerza, menosDefensa]);
         cerrar.on(Phaser.Input.Events.POINTER_DOWN, () => {
             contenedor.destroy();

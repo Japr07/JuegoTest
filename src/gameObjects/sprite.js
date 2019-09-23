@@ -7,10 +7,12 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
         // this.body.allowDrag = false;
         this.body.immovable = true;
         scene.add.existing(this);
+        this.iniciarAnimaciones(scene);
+        this.setOrigin(0.5);
     };
     iniciarAnimaciones(scene) {
         scene.anims.create({
-            key: 'down',
+            key: `down-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [2, 1, 3, 1]
             }),
@@ -18,7 +20,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
             repeat: -1
         });
         scene.anims.create({
-            key: 'up',
+            key: `up-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [5, 4, 6, 4]
             }),
@@ -26,7 +28,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
             repeat: -1
         });
         scene.anims.create({
-            key: 'right',
+            key: `right-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [8, 7, 9, 7]
             }),
@@ -34,7 +36,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
             repeat: -1
         });
         scene.anims.create({
-            key: 'left',
+            key: `left-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [11, 10, 12, 10]
             }),
@@ -42,7 +44,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
             repeat: -1
         });
         scene.anims.create({
-            key: 'attack-punch-down',
+            key: `attack-punch-down-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [14, 15, 16, 17]
             }),
@@ -50,7 +52,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
             repeat: 0
         });
         scene.anims.create({
-            key: 'attack-punch-up',
+            key: `attack-punch-up-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [22, 23, 24, 25]
             }),
@@ -58,7 +60,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
             repeat: 0
         });
         scene.anims.create({
-            key: 'attack-punch-right',
+            key: `attack-punch-right-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [30, 31, 32, 33]
             }),
@@ -66,7 +68,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
             repeat: 0
         });
         scene.anims.create({
-            key: 'attack-punch-left',
+            key: `attack-punch-left-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
                 frames: [38, 39, 40, 41]
             }),
@@ -75,34 +77,33 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
         });
     };
     AnimPunch(Direccion) {
-        this.iniciarAnimaciones(this.scene);
         switch (Direccion) {
             case 'Arriba':
-                this.anims.play('attack-punch-up', true);
+                this.anims.play(`attack-punch-up-${this.texture.key}`, true);
                 break;
             case 'Abajo':
-                this.anims.play('attack-punch-down', false);
+                this.anims.play(`attack-punch-down-${this.texture.key}`, false);
                 break;
             case 'Derecha':
-                this.anims.play('attack-punch-right', true);
+                this.anims.play(`attack-punch-right-${this.texture.key}`, true);
                 break;
             case 'Izquierda':
-                this.anims.play('attack-punch-left', true);
+                this.anims.play(`attack-punch-left-${this.texture.key}`, true);
                 break;
             case 'Quieto':
                 let animacionActual = this.anims.getCurrentKey();
                 this.anims.stop();
                 switch (animacionActual) {
-                    case 'attack-punch-up':
+                    case `attack-punch-up-${this.texture.key}`:
                         this.setTexture(this.texture.key, 4);
                         break;
-                    case 'attack-punch-down':
+                    case `attack-punch-down-${this.texture.key}`:
                         this.setTexture(this.texture.key, 1);
                         break;
-                    case 'attack-punch-left':
+                    case `attack-punch-left-${this.texture.key}`:
                         this.setTexture(this.texture.key, 10);
                         break;
-                    case 'attack-punch-right':
+                    case `attack-punch-right-${this.texture.key}`:
                         this.setTexture(this.texture.key, 7);
                         break;
                 }
@@ -110,38 +111,37 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
         };
     };
     AnimMover(Direccion) {
-        this.iniciarAnimaciones(this.scene);
         switch (Direccion) {
             case 'Arriba':
                 if (this.anims.isPlaying) return;
-                this.anims.play('up', true);
+                this.anims.play(`up-${this.texture.key}`, true);
                 break;
             case 'Abajo':
                 if (this.anims.isPlaying) return;
-                this.anims.play('down', true);
+                this.anims.play(`down-${this.texture.key}`, true);
                 break;
             case 'Izquierda':
                 if (this.anims.isPlaying) return;
-                this.anims.play('left', true);
+                this.anims.play(`left-${this.texture.key}`, true);
                 break;
             case 'Derecha':
                 if (this.anims.isPlaying) return;
-                this.anims.play('right', true);
+                this.anims.play(`right-${this.texture.key}`, true);
                 break;
             case 'Quieto':
                 let animacionActual = this.anims.getCurrentKey();
                 this.anims.stop();
                 switch (animacionActual) {
-                    case 'up':
+                    case `up-${this.texture.key}`:
                         this.setTexture(this.texture.key, 4);
                         break;
-                    case 'down':
+                    case `down-${this.texture.key}`:
                         this.setTexture(this.texture.key, 1);
                         break;
-                    case 'left':
+                    case `left-${this.texture.key}`:
                         this.setTexture(this.texture.key, 10);
                         break;
-                    case 'right':
+                    case `right-${this.texture.key}`:
                         this.setTexture(this.texture.key, 7);
                         break;
                 };
