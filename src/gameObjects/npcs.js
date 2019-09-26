@@ -19,7 +19,9 @@ export default class Npcs extends Sprite {
             loop: false,
             delay: 500
         });
-
+        this.dropItem = this.scene.sound.add('LvlUp', {
+            loop: false
+        });
     };
 
     ShowStats() {
@@ -49,7 +51,7 @@ ki Defensa: ${this.kiDefensa}`, 13)
                     }
                     break;
                 case 2:
-                    if (this.body.y + this.body.height >= 650) {
+                    if (this.body.y + this.body.height >= this.scene.game.config.height - 10) {
                         this.AnimMover("Arriba");
                         this.body.setVelocityY(-150);
                     } else {
@@ -67,7 +69,7 @@ ki Defensa: ${this.kiDefensa}`, 13)
                     }
                     break;
                 case 4:
-                    if (this.body.x + this.body.width >= 1350) {
+                    if (this.body.x + this.body.width >= this.scene.game.config.width - 10) {
                         this.AnimMover("Izquierda");
                         this.body.setVelocityX(-150);
                     } else {
@@ -84,8 +86,8 @@ ki Defensa: ${this.kiDefensa}`, 13)
     };
 
     DropItem(Player) {
-        let droprate = Phaser.Math.Between(0, 2);
-        if (droprate == 1) {
+        let droprate = Phaser.Math.Between(0, 4);
+        if (droprate == 2) {
             let nombre = Phaser.Math.Between(0, 2);
             let cantidad = Phaser.Math.Between(1, 3);
             switch (nombre) {
@@ -99,6 +101,7 @@ ki Defensa: ${this.kiDefensa}`, 13)
                     nombre = 'SkillPoints';
                     break;
             }
+            this.dropItem.play();
             Player.NuevoItem(nombre, cantidad);
             Utilidades.ColocarTexto(this.scene, Player.body.x + 40, Player.body.y, `${this.texture.key} Dejo Caer ${cantidad} ${nombre}`, 13, 3000)
         }
