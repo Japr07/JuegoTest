@@ -49,7 +49,8 @@ ${data.nombre} - ${data.cantidad}
     };
 
     NuevoItem(nombre, cantidad) {
-        let inv = Utilidades.ExisteObjeto(nombre, this);
+        if (nombre == "StatsPoints") return this.statsPoints += cantidad;
+        let inv = Utilidades.ExisteObjeto(nombre, this.inventario);
         if (inv.existe) {
             this.inventario[inv.posicion].cantidad += cantidad;
         } else {
@@ -97,14 +98,14 @@ ${data.nombre} - ${data.cantidad}
     ShowStats() {
         let stats = Utilidades.ColocarTexto(this.scene, 0, 0, `Nombre: Player
 Nivel: ${this.nivel}
-exp: ${this.exp}/${this.nexp}
-vida: ${this.vida}/${this.maxVida}
-ki: ${this.ki}/${this.maxKi}
-fuerza: ${this.fuerza}
-defensa: ${this.defensa}
-ki Defensa: ${this.kiDefensa}
-statsPoint: ${this.statsPoints}
-zenie: ${this.zenie}
+Exp: ${this.exp}/${this.nexp}
+Vida: ${this.vida}/${this.maxVida}
+Ki: ${this.ki}/${this.maxKi}
+Fuerza: ${this.fuerza}
+Defensa: ${this.defensa}
+Ki Defensa: ${this.kiDefensa}
+Stats Point: ${this.statsPoints}
+Zenie: ${this.zenie}
 Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
         Utilidades.NuevaVentana(this.scene, stats);
     }
@@ -185,7 +186,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
         let menosFuerza = this.scene.add.image(area.x + 220, area.y + 128, 'Boton Menos').setScale(2).setOrigin(0.5).setInteractive();
         let menosDefensa = this.scene.add.image(area.x + 220, area.y + 146, 'Boton Menos').setScale(2).setOrigin(0.5).setInteractive();
 
-        masVida.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        masVida.on('pointerdown', () => {
             if (this.statsPoints > pointVida && tempStatsPoint > 0) {
                 tempStatsPoint--;
                 pointVida++;
@@ -196,7 +197,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textVida.text = `${pointVida}`;
             };
         });
-        masKi.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        masKi.on('pointerdown', () => {
             if (this.statsPoints > pointKi && tempStatsPoint > 0) {
                 tempStatsPoint--;
                 pointKi++;
@@ -207,7 +208,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textKi.text = `${pointKi}`;
             };
         })
-        masKiDefensa.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        masKiDefensa.on('pointerdown', () => {
             if (this.statsPoints > pointKiDefensa && tempStatsPoint > 0) {
                 tempStatsPoint--;
                 pointKiDefensa++;
@@ -218,7 +219,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textKiDefensa.text = `${pointKiDefensa}`;
             };
         })
-        masFuerza.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        masFuerza.on('pointerdown', () => {
             if (this.statsPoints > pointFuerza && tempStatsPoint > 0) {
                 tempStatsPoint--;
                 pointFuerza++;
@@ -229,7 +230,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textFuerza.text = `${pointFuerza}`;
             };
         })
-        masDefensa.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        masDefensa.on('pointerdown', () => {
             if (this.statsPoints > pointDefensa && tempStatsPoint > 0) {
                 tempStatsPoint--;
                 pointDefensa++;
@@ -240,7 +241,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textDefensa.text = `${pointDefensa}`;
             };
         })
-        menosVida.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        menosVida.on('pointerdown', () => {
             if (pointVida > 0) {
                 tempStatsPoint++;
                 pointVida--;
@@ -251,7 +252,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textVida.text = `${pointVida}`;
             };
         });
-        menosKi.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        menosKi.on('pointerdown', () => {
             if (pointKi > 0) {
                 tempStatsPoint++;
                 pointKi--;
@@ -262,7 +263,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textKi.text = `${pointKi}`;
             };
         });
-        menosKiDefensa.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        menosKiDefensa.on('pointerdown', () => {
             if (pointKiDefensa > 0) {
                 tempStatsPoint++;
                 pointKiDefensa--;
@@ -273,7 +274,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textKiDefensa.text = `${pointKiDefensa}`;
             };
         });
-        menosFuerza.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        menosFuerza.on('pointerdown', () => {
             if (pointFuerza > 0) {
                 tempStatsPoint++;
                 pointFuerza--;
@@ -284,7 +285,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textFuerza.text = `${pointFuerza}`;
             };
         });
-        menosDefensa.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        menosDefensa.on('pointerdown', () => {
             if (pointDefensa > 0) {
                 tempStatsPoint++;
                 pointDefensa--;
@@ -295,7 +296,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
                 textDefensa.text = `${pointDefensa}`;
             };
         });
-        aceptarFondo.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        aceptarFondo.on('pointerdown', () => {
             if (pointVida > 0) {
                 this.vida += (100 * pointVida);
                 this.maxVida += (100 * pointVida);
@@ -322,7 +323,7 @@ Exp Boost: ${Math.round(100*((this.expboost-1) * 5 / 100))}%`, 13);
         });
         let cerrar = this.scene.add.image(area.width, area.y, 'Cerrar').setAngle(45).setScale(0.6).setInteractive();
         contenedor.add([graphics, anunciado, aceptarFondo, aceptarText, cerrar, textVida, textKi, textKiDefensa, textFuerza, textDefensa, masVida, masKi, masKiDefensa, masFuerza, masDefensa, stats, menosVida, menosKi, menosKiDefensa, menosFuerza, menosDefensa]);
-        cerrar.on(Phaser.Input.Events.POINTER_DOWN, () => {
+        cerrar.on('pointerdown', () => {
             contenedor.destroy();
         });
     }

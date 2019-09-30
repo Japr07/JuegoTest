@@ -13,13 +13,36 @@ body {
     background-color: #70557e;
 }
 
+.titulo{
+    padding-top: 15px !important;
+    text-align: center;
+}
+h4{
+    margin-top: 0px;
+}
+h2{
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
 #changelogs {
     margin: auto;
     position: relative;
-    width: 80%;
-    max-width: 400px;
-    height: 60%;
+    width: 95%;
+    height: 85%;
     overflow: auto;
-    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 15px;
+}
 
+.version{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid rgb(45, 22, 145);
+    border-radius: 15px;
+
+}
+
+a {
+    font-size: 16px;
 }

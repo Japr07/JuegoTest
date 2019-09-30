@@ -46,7 +46,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
         scene.anims.create({
             key: `attack-punch-down-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
-                frames: [14, 15, 16, 17]
+                frames: [13, 14, 15, 16]
             }),
             frameRate: 16,
             repeat: 0
@@ -54,7 +54,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
         scene.anims.create({
             key: `attack-punch-up-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
-                frames: [22, 23, 24, 25]
+                frames: [17, 18, 19, 20]
             }),
             frameRate: 16,
             repeat: 0
@@ -62,7 +62,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
         scene.anims.create({
             key: `attack-punch-right-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
-                frames: [30, 31, 32, 33]
+                frames: [21, 22, 23, 24]
             }),
             frameRate: 16,
             repeat: 0
@@ -70,7 +70,7 @@ export default class Sprite extends Phaser.GameObjects.Sprite {
         scene.anims.create({
             key: `attack-punch-left-${this.texture.key}`,
             frames: scene.anims.generateFrameNumbers(this.texture.key, {
-                frames: [38, 39, 40, 41]
+                frames: [25, 26, 27, 28]
             }),
             frameRate: 16,
             repeat: 0

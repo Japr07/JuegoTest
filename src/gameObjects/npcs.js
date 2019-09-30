@@ -27,11 +27,11 @@ export default class Npcs extends Sprite {
     ShowStats() {
         let stats = Utilidades.ColocarTexto(this.scene, 0, 0, `Nombre: ${this.texture.key}
 Nivel: ${this.nivel}
-vida: ${this.vida}/${this.maxVida}
-ki: ${this.ki}/${this.maxKi}
-fuerza: ${this.fuerza}
-defensa: ${this.defensa}
-ki Defensa: ${this.kiDefensa}`, 13)
+Vida: ${this.vida}/${this.maxVida}
+Ki: ${this.ki}/${this.maxKi}
+Fuerza: ${this.fuerza}
+Defensa: ${this.defensa}
+Ki Defensa: ${this.kiDefensa}`, 13)
         Utilidades.NuevaVentana(this.scene, stats)
     };
 
@@ -98,7 +98,7 @@ ki Defensa: ${this.kiDefensa}`, 13)
                     nombre = 'Semillas';
                     break;
                 case 2:
-                    nombre = 'SkillPoints';
+                    nombre = 'StatsPoints';
                     break;
             }
             this.dropItem.play();

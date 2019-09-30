@@ -34,9 +34,9 @@ let Utilidades = {
             contenedor.destroy();
         });
     },
-    ExisteObjeto: (Objeto, Player) => {
-        for (const i in Player.inventario) {
-            if (Objeto == Player.inventario[i].nombre) {
+    ExisteObjeto: (Objeto, Inventario) => {
+        for (const i in Inventario) {
+            if (Objeto == Inventario[i].nombre) {
                 return {
                     existe: true,
                     posicion: i

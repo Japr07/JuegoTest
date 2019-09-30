@@ -11,7 +11,6 @@ class Bootloader extends Phaser.Scene {
         const rutaAudio = './src/assets/audio/';
         const rutaSprite = './src/assets/sprites/';
 
-
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
@@ -37,17 +36,19 @@ class Bootloader extends Phaser.Scene {
             loadingText.destroy();
             percentText.destroy();
             assetText.destroy();
-            this.scene.start("Juego");
+            this.scene.start("SelectChara");
         });
 
         this.load.audio('Golpe', `${rutaAudio}hit1.wav`);
         this.load.audio('Damage', `${rutaAudio}hit2.wav`);
         this.load.audio('LvlUp', `${rutaAudio}newskill.wav`);
+        this.load.audio('Select', `${rutaAudio}select.wav`)
 
         this.load.image('Cerrar', `${rutaSprite}Cerrar.png`);
         this.load.image('Boton Mas', `${rutaSprite}Mas.png`);
         this.load.image('Boton Menos', `${rutaSprite}Menos.png`);
         this.load.image('Boton Fondo', `${rutaSprite}botonFondo.png`);
+        this.load.image('SelectChara', `${rutaSprite}selectChara.png`)
 
         this.load.spritesheet('GokuAdultoGT', `${rutaSprite}AdultGTGoku.png`, {
             frameHeight: 68,

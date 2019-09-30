@@ -8,16 +8,20 @@ export default class Juego extends Phaser.Scene {
             key: "Juego"
         });
     };
+    init(personaje) {
+        this.player = new Player(this, 100, 200, personaje, 1).setInteractive();
+    }
     create() {
-        this.gokuss = new Npcs(this, 150, 100, 'Goku SS', 1, 2);
-        this.gokuAdult = new Npcs(this, 50, 100, 'GokuAdultoGT', 1, 1);
-        this.gokuss2 = new Npcs(this, 250, 100, 'Goku SS2', 1, 4);
-        this.gokuss3 = new Npcs(this, 350, 100, 'Goku SS3', 1, 8);
-        this.gokuss4 = new Npcs(this, 450, 100, 'Goku SS4', 1, 16);
-        this.gokuss5 = new Npcs(this, 550, 100, 'Goku SS5', 1, 32);
-        this.GoldenDestroyer = new Npcs(this, 700, 100, 'Golden Destroyer', 1, 64);
+        this.goku = new Npcs(this, 50, 100, 'Goku', 1, 1);
+        this.gokuAdult = new Npcs(this, 150, 100, 'GokuAdultoGT', 1, 2);
+        this.gokuss = new Npcs(this, 250, 100, 'Goku SS', 1, 4);
+        this.gokuss2 = new Npcs(this, 350, 100, 'Goku SS2', 1, 8);
+        this.gokuss3 = new Npcs(this, 450, 100, 'Goku SS3', 1, 16);
+        this.gokuss4 = new Npcs(this, 550, 100, 'Goku SS4', 1, 32);
+        this.gokuss5 = new Npcs(this, 650, 100, 'Goku SS5', 1, 64);
+        this.GoldenDestroyer = new Npcs(this, 800, 100, 'Golden Destroyer', 1, 128);
         this.enemigo = false;
-        this.enemigos = this.add.group([this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
+        this.enemigos = this.add.group([this.goku, this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
 
         this.enemigos.getChildren().forEach((enemigo) => {
             enemigo.setInteractive();
@@ -26,13 +30,12 @@ export default class Juego extends Phaser.Scene {
                 enemigo.ShowStats();
             });
         });
-        this.player = new Player(this, 100, 200, 'Goku', 1).setInteractive();
         this.player.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.player.ShowStats();
         });
         //buscar correccion de bug que sigue en target cuando no lo esta... 
         this.physics.add.collider(this.enemigos, this.player, this.SeleccionarEnemigo, false, this);
-        this.teclas = this.input.keyboard.addKeys('up,down,left,right,a,d,s,i');
+        this.teclas = this.input.keyboard.addKeys('up,down,left,right,a,d,s,i,h');
         this.dir = 'Abajo';
         Utilidades.ColocarTexto(this, this.game.config.width - 250, 100, `
         Instrucciones:
@@ -41,6 +44,7 @@ export default class Juego extends Phaser.Scene {
         -Generar mas npcs: D
         -Usar StatsPoints: S
         -Inventario: I
+        -Changelogs: H
         -Click sobre un NPC o el
         player para ver sus stats
         `, 18);
@@ -50,14 +54,15 @@ export default class Juego extends Phaser.Scene {
 
         if (Phaser.Input.Keyboard.JustDown(this.teclas.d)) {
             this.multi++
-            this.gokuAdult = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'GokuAdultoGT', 1, 1 * this.multi);
-            this.gokuss = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS', 1, 2 * this.multi);
-            this.gokuss2 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS2', 1, 4 * this.multi);
-            this.gokuss3 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS3', 1, 8 * this.multi);
-            this.gokuss4 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS4', 1, 16 * this.multi);
-            this.gokuss5 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS5', 1, 32 * this.multi);
-            this.GoldenDestroyer = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Golden Destroyer', 1, 64 * this.multi);
-            this.enemigos = this.add.group([this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
+            this.goku = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku', 1, 1 * this.multi);
+            this.gokuAdult = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'GokuAdultoGT', 1, 2 * this.multi);
+            this.gokuss = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS', 1, 4 * this.multi);
+            this.gokuss2 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS2', 1, 8 * this.multi);
+            this.gokuss3 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS3', 1, 16 * this.multi);
+            this.gokuss4 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS4', 1, 32 * this.multi);
+            this.gokuss5 = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Goku SS5', 1, 64 * this.multi);
+            this.GoldenDestroyer = new Npcs(this, Phaser.Math.Between(50, this.game.config.width - 50), Phaser.Math.Between(50, this.game.config.height - 50), 'Golden Destroyer', 1, 128 * this.multi);
+            this.enemigos = this.add.group([this.goku, this.gokuAdult, this.GoldenDestroyer, this.gokuss, this.gokuss2, this.gokuss3, this.gokuss4, this.gokuss5]);
             this.physics.add.collider(this.enemigos, this.player, this.SeleccionarEnemigo, false, this);
             this.enemigos.getChildren().forEach((enemigo) => {
                 enemigo.setInteractive();
@@ -69,6 +74,9 @@ export default class Juego extends Phaser.Scene {
         }
         if (Phaser.Input.Keyboard.JustDown(this.teclas.s)) {
             this.player.StatsPoints()
+        };
+        if (Phaser.Input.Keyboard.JustDown(this.teclas.h)) {
+            document.open('./src/utils/changelogs.html', 'Changelogs', 'height=500,width=400', false)
         };
         if (Phaser.Input.Keyboard.JustDown(this.teclas.i)) {
             this.player.Inventario();
